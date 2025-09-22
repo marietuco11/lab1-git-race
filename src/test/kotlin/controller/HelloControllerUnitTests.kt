@@ -35,13 +35,13 @@ class HelloControllerUnitTests {
     }
     
     @Test
-    fun `should return API response with timestamp`() {
+    fun `should return API response with greeting and timestamp`() {
         val apiController = HelloApiController()
         val response = apiController.helloApi("Test")
         
-        assertThat(response).containsKey("message")
-        assertThat(response).containsKey("timestamp")
-        assertThat(response["message"]).isEqualTo("Hello, Test!")
-        assertThat(response["timestamp"]).isNotNull()
+        assertThat(response.message).startsWith("Good")
+        assertThat(response.message).endsWith(", Test!")
+        assertThat(response.timestamp).isNotNull()
+        assertThat(response.timestamp).isNotEmpty()
     }
 }

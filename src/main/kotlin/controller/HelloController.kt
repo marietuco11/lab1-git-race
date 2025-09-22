@@ -7,6 +7,10 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import org.slf4j.LoggerFactory
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 @Controller
 class HelloController(
@@ -28,12 +32,44 @@ class HelloController(
 
 @RestController
 class HelloApiController {
-    
+
+    private val log = LoggerFactory.getLogger(HelloApiController::class.java)
+
+    /**
+     * REST API endpoint at "/api/hello"
+     *
+     * Returns a JSON object with a time-based greeting and an ISO timestamp.
+     * The greeting changes depending on the current hour:
+     * - Good morning before 12:00
+     * - Good afternoon before 18:00
+     * - Good evening afterwards
+     *
+     */
     @GetMapping("/api/hello", produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun helloApi(@RequestParam(defaultValue = "World") name: String): Map<String, String> {
-        return mapOf(
-            "message" to "Hello, $name!",
-            "timestamp" to java.time.Instant.now().toString()
-        )
+    fun helloApi(@RequestParam(defaultValue = "World") name: String): HelloResponse {
+        val now = LocalDateTime.now()
+        val time = now.toLocalTime()
+
+        val greeting = when {
+            time.isBefore(LocalTime.NOON) -> "Good morning"
+            time.isBefore(LocalTime.of(18, 0)) -> "Good afternoon"
+            else -> "Good evening"
+        }
+
+        val message = "$greeting, $name!"
+        val timestamp = now.format(DateTimeFormatter.ISO_DATE_TIME)
+
+        // Structured log for debugging and tracing
+        log.info("GET /api/hello name={} greeting={} timestamp={}", name, greeting, timestamp)
+
+        return HelloResponse(message, timestamp)
     }
 }
+
+/**
+ * Data Transfer Object (DTO) for the /api/hello JSON response.
+ */
+data class HelloResponse(
+    val message: String,
+    val timestamp: String
+)
