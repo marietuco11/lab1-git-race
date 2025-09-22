@@ -4,7 +4,7 @@ A modern Spring Boot application built with Kotlin, featuring a responsive web i
 
 ## 🚀 Features
 
-- **Modern Tech Stack**: Spring Boot 3.5.3, Kotlin 2.2.10, Java 21 LTS
+- **Modern Tech Stack**: Spring Boot 3.5.3, Kotlin 2.2.10, Java 17 LTS
 - **Responsive UI**: Bootstrap 5.3.3 with modern design
 - **REST API**: JSON endpoints with timestamp support
 - **Health Monitoring**: Spring Boot Actuator for application health
@@ -18,7 +18,7 @@ A modern Spring Boot application built with Kotlin, featuring a responsive web i
 
 - **Backend**: Spring Boot 3.5.3
 - **Language**: Kotlin 2.2.10
-- **Java Version**: 21 LTS
+- **Java Version**: 17 LTS
 - **Frontend**: Bootstrap 5.3.3, Thymeleaf
 - **Build Tool**: Gradle 9.0.0
 - **Testing**: JUnit 5, AssertJ, MockMvc
@@ -94,8 +94,8 @@ Run specific test classes:
 - `GET /?name={name}` - Personalized greeting page
 
 ### REST API Endpoints
-- `GET /api/hello` - Returns JSON greeting with timestamp
-- `GET /api/hello?name={name}` - Returns personalized JSON greeting
+- `GET /api/hello` - Returns JSON greeting (Good morning/afternoon/evening) with timestamp
+- `GET /api/hello?name={name}` - Returns personalized JSON greeting with timestamp
 
 ### Monitoring Endpoints
 - `GET /actuator/health` - Application health status
@@ -208,3 +208,5 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - ✅ Fixed Bootstrap version inconsistencies
 - ✅ Enhanced error handling and validation
 - ✅ Added interactive features and API endpoints
+- ✅ Time-based greetings (Good morning / Good afternoon / Good evening)
+- ✅ Logging added to API requests with timestamp

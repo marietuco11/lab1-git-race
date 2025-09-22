@@ -1,13 +1,19 @@
 # Lab 1 Git Race -- Project Report
 
 ## Description of Changes
-[Detailed description of all changes made]
+- Modified `/api/hello` endpoint to return greetings depending on the current time of day.
+- Added structured logging for every API request, including name, greeting, and timestamp.
+- Updated and extended unit tests to validate new behavior.
 
 ## Technical Decisions
-[Explanation of technical choices made]
+- Chose `LocalDateTime` and `LocalTime` for determining the greeting (morning/afternoon/evening).
+- Used `LoggerFactory` to integrate with Spring Boot’s default logging system.
 
 ## Learning Outcomes
-[What you learned from this assignment]
+- Practiced extending an existing Spring Boot + Kotlin project.
+- Understood how to return data classes as JSON automatically in Spring Boot.
+- Learned how to adapt unit tests after refactoring API return types.
+- Improved familiarity with documenting changes and good Git practices.
 
 ## AI Disclosure
 ### AI Tools Used
