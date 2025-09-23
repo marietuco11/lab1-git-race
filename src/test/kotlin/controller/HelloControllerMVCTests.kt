@@ -42,11 +42,12 @@ class HelloControllerMVCTests {
     @Test
     fun `should return API response as JSON`() {
         mockMvc.perform(get("/api/hello").param("name", "Test"))
-            .andDo(print())
             .andExpect(status().isOk)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.message", equalTo("Hello, Test!")))
+            .andExpect(jsonPath("$.message").value(org.hamcrest.Matchers.containsString("Test")))
+            .andExpect(jsonPath("$.message").value(org.hamcrest.Matchers.containsString("Good")))
             .andExpect(jsonPath("$.timestamp").exists())
     }
+
 }
 

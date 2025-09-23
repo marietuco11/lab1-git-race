@@ -9,6 +9,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
+import es.unizar.webeng.hello.controller.HelloResponse
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class IntegrationTest {
@@ -39,12 +40,12 @@ class IntegrationTest {
 
     @Test
     fun `should return API response with timestamp`() {
-        val response = restTemplate.getForEntity("http://localhost:$port/api/hello?name=Test", String::class.java)
-        
-        assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
-        assertThat(response.headers.contentType).isEqualTo(MediaType.APPLICATION_JSON)
-        assertThat(response.body).contains("Hello, Test!")
-        assertThat(response.body).contains("timestamp")
+        val response = restTemplate.getForObject("/api/hello?name=Test", HelloResponse::class.java)
+
+        assertThat(response).isNotNull
+        assertThat(response!!.message).startsWith("Good")
+        assertThat(response.message).endsWith(", Test!")
+        assertThat(response.timestamp).isNotEmpty()
     }
 
     @Test

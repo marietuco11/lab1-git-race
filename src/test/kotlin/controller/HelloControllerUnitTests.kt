@@ -44,4 +44,18 @@ class HelloControllerUnitTests {
         assertThat(response.timestamp).isNotNull()
         assertThat(response.timestamp).isNotEmpty()
     }
+
+    @Test
+    fun `should store greetings in history`() {
+        val apiController = HelloApiController()
+        apiController.helloApi("Alice")
+        apiController.helloApi("Bob")
+
+        val history = apiController.getHistory()
+
+        assertThat(history).hasSize(2)
+        assertThat(history[0].message).endsWith(", Alice!")
+        assertThat(history[1].message).endsWith(", Bob!")
+    }
+
 }
