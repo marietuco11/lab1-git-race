@@ -34,6 +34,7 @@ class HelloController(
 class HelloApiController {
 
     private val log = LoggerFactory.getLogger(HelloApiController::class.java)
+    private val history = mutableListOf<HelloResponse>()
 
     /**
      * REST API endpoint at "/api/hello"
@@ -59,10 +60,24 @@ class HelloApiController {
         val message = "$greeting, $name!"
         val timestamp = now.format(DateTimeFormatter.ISO_DATE_TIME)
 
+        val response = HelloResponse(message, timestamp)
+
         // Structured log for debugging and tracing
         log.info("GET /api/hello name={} greeting={} timestamp={}", name, greeting, timestamp)
 
+        history.add(response)
         return HelloResponse(message, timestamp)
+    }
+
+    /**
+     * REST API endpoint at "/api/hello/history"
+     *
+     * Returns the full list of greetings made since the application started.
+     */
+    @GetMapping("/api/hello/history", produces = [MediaType.APPLICATION_JSON_VALUE])
+    fun getHistory(): List<HelloResponse> {
+        log.info("GET /api/hello/history size={}", history.size)
+        return history
     }
 }
 
