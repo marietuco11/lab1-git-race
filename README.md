@@ -96,6 +96,8 @@ Run specific test classes:
 ### REST API Endpoints
 - `GET /api/hello` - Returns JSON greeting (Good morning/afternoon/evening) with timestamp
 - `GET /api/hello?name={name}` - Returns personalized JSON greeting with timestamp
+- `GET /api/hello/history` - Returns the list of all greetings made since the server started
+
 
 ### Monitoring Endpoints
 - `GET /actuator/health` - Application health status

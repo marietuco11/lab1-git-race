@@ -4,6 +4,10 @@
 - Modified `/api/hello` endpoint to return greetings depending on the current time of day.
 - Added structured logging for every API request, including name, greeting, and timestamp.
 - Updated and extended unit tests to validate new behavior.
+- Added in-memory greeting history stored in `HelloApiController`.
+- Implemented new endpoint `/api/hello/history` to retrieve all greetings.
+- Extended tests to check that greetings are stored and retrieved correctly.
+
 
 ## Technical Decisions
 - Chose `LocalDateTime` and `LocalTime` for determining the greeting (morning/afternoon/evening).
