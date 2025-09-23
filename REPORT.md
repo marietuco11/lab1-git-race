@@ -7,11 +7,17 @@
 - Added in-memory greeting history stored in `HelloApiController`.
 - Implemented new endpoint `/api/hello/history` to retrieve all greetings.
 - Extended tests to check that greetings are stored and retrieved correctly.
+- Enabled caching with `@EnableCaching` in `Application.kt`.
+- Annotated `/api/hello` endpoint with `@Cacheable("greetings")`.
+
 
 
 ## Technical Decisions
 - Chose `LocalDateTime` and `LocalTime` for determining the greeting (morning/afternoon/evening).
 - Used `LoggerFactory` to integrate with Spring Boot’s default logging system.
+- Used Spring Boot's default ConcurrentMapCacheManager for in-memory caching.
+- Chose annotation-based caching (`@Cacheable`) for simplicity and readability.
+
 
 ## Learning Outcomes
 - Practiced extending an existing Spring Boot + Kotlin project.

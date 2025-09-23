@@ -58,4 +58,19 @@ class HelloControllerUnitTests {
         assertThat(history[1].message).endsWith(", Bob!")
     }
 
+
+    @Test
+    fun `should cache greetings for the same name`() {
+        val apiController = HelloApiController()
+        
+        val first = apiController.helloApi("CacheTest")
+        val second = apiController.helloApi("CacheTest")
+
+        // Mensaje debe ser idéntico
+        assertThat(first.message).isEqualTo(second.message)
+
+        // Timestamp también debe ser igual (mismo objeto de caché)
+        assertThat(first.timestamp).isEqualTo(second.timestamp)
+    }
+
 }
