@@ -49,5 +49,19 @@ class HelloControllerMVCTests {
             .andExpect(jsonPath("$.timestamp").exists())
     }
 
+    @Test
+    fun `should return cached response for the same name`() {
+        val result1 = mockMvc.perform(get("/api/hello").param("name", "CacheUser"))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andReturn()
+
+        val body1 = result1.response.contentAsString
+
+        mockMvc.perform(get("/api/hello").param("name", "CacheUser"))
+            .andExpect(status().isOk)
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(content().string(equalTo(body1)))
+    }
 }
 

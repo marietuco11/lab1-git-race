@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import org.springframework.cache.annotation.Cacheable
 
 @Controller
 class HelloController(
@@ -46,6 +47,7 @@ class HelloApiController {
      * - Good evening afterwards
      *
      */
+    @Cacheable("greetings")
     @GetMapping("/api/hello", produces = [MediaType.APPLICATION_JSON_VALUE])
     fun helloApi(@RequestParam(defaultValue = "World") name: String): HelloResponse {
         val now = LocalDateTime.now()
