@@ -94,8 +94,8 @@ Run specific test classes:
 - `GET /?name={name}` - Personalized greeting page
 
 ### REST API Endpoints
-- `GET /api/hello` - Returns JSON greeting (Good morning/afternoon/evening) with timestamp
-- `GET /api/hello?name={name}` - Returns personalized JSON greeting with timestamp
+- `GET /api/hello` - Returns JSON greeting (Good morning/afternoon/evening) with timestamp (cached per name)
+- `GET /api/hello?name={name}` - Returns personalized JSON greeting with timestamp (cached per name)
 - `GET /api/hello/history` - Returns the list of all greetings made since the server started
 
 
@@ -162,6 +162,10 @@ The application includes a development-focused Docker setup:
 - **Development Tools**: Includes wget for health checks and debugging utilities
 
 ## 🔧 Development
+### Caching
+The `/api/hello` endpoint now uses Spring Boot caching. 
+Repeated requests with the same `name` parameter return the cached greeting 
+instead of recalculating it. This improves performance and reduces logging.
 
 ### Adding New Features
 
