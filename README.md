@@ -92,6 +92,7 @@ Run specific test classes:
 ### Web Endpoints
 - `GET /` - Main web page with interactive HTTP debugging tools
 - `GET /?name={name}` - Personalized greeting page
+- `GET /?lang={locale}` - Change the language of the web interface (e.g., ?lang=es).
 
 ### REST API Endpoints
 - `GET /api/hello` - Returns JSON greeting (Good morning/afternoon/evening) with timestamp (cached per name)
@@ -121,6 +122,9 @@ src/
 │   │   └── HelloWorld.kt               # Main application class
 │   └── resources/
 │       ├── application.properties      # Application configuration
+|       ├── messages.properties         # Messages language  
+|       ├── messages_es.properties
+|       ├── messages_fr.properties
 │       ├── templates/
 │       │   └── welcome.html           # Thymeleaf template
 │       └── public/
@@ -216,3 +220,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - ✅ Added interactive features and API endpoints
 - ✅ Time-based greetings (Good morning / Good afternoon / Good evening)
 - ✅ Logging added to API requests with timestamp
+- ✅ Implemented Internationalization (i18n) for multi-language support
+- ✅ Added API Caching (@Cacheable) for greeting responses
+- ✅ Implemented Greeting History with a new /api/hello/history endpoint

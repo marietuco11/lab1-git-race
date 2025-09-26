@@ -12,6 +12,8 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import org.springframework.cache.annotation.Cacheable
+import org.springframework.context.MessageSource
+import java.util.Locale
 
 @Controller
 class HelloController(
@@ -32,7 +34,7 @@ class HelloController(
 }
 
 @RestController
-class HelloApiController {
+class HelloApiController(private val messageSource: MessageSource) {
 
     private val log = LoggerFactory.getLogger(HelloApiController::class.java)
     private val history = mutableListOf<HelloResponse>()
@@ -49,26 +51,31 @@ class HelloApiController {
      */
     @Cacheable("greetings")
     @GetMapping("/api/hello", produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun helloApi(@RequestParam(defaultValue = "World") name: String): HelloResponse {
+    fun helloApi(
+        @RequestParam(defaultValue = "World") name: String,
+        @RequestParam(defaultValue = "en") lang: String
+    ): HelloResponse {
         val now = LocalDateTime.now()
         val time = now.toLocalTime()
+        val locale = Locale(lang)
 
-        val greeting = when {
-            time.isBefore(LocalTime.NOON) -> "Good morning"
-            time.isBefore(LocalTime.of(18, 0)) -> "Good afternoon"
-            else -> "Good evening"
+        val key = when {
+            time.isBefore(LocalTime.NOON) -> "greeting.morning"
+            time.isBefore(LocalTime.of(18, 0)) -> "greeting.afternoon"
+            else -> "greeting.evening"
         }
 
+        val greeting = messageSource.getMessage(key, null, locale)
         val message = "$greeting, $name!"
         val timestamp = now.format(DateTimeFormatter.ISO_DATE_TIME)
 
         val response = HelloResponse(message, timestamp)
 
         // Structured log for debugging and tracing
-        log.info("GET /api/hello name={} greeting={} timestamp={}", name, greeting, timestamp)
+        log.info("GET /api/hello name={} lang={} greeting={} timestamp={}", name, lang, greeting, timestamp)
 
         history.add(response)
-        return HelloResponse(message, timestamp)
+        return response
     }
 
     /**
